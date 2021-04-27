@@ -24,7 +24,8 @@ export interface TravelAgencyAdminAddModel{
     instagram: string,
     logo: string,
     profile_picture: string,
-    payment_method: string
+    payment_method: string,
+    admin_header: string
 }
 
 export interface TravelAgencyAdminModel extends Sequelize.Model<TravelAgencyAdminModel,TravelAgencyAdminAddModel>{

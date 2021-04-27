@@ -36,10 +36,11 @@ TravelAgencyAdminRouter.post('/register', (req, res) => {
     const logo = req.body.logo
     const profile_picture = req.body.profile_picture
     const payment_method = req.body.payment_method
+    const admin_header = req.header('token')
     //const payload = matchedData({email, password, role}) as AdminAddModel
     const user = userService.register({email,password,role, name, travel_agency_name,mobile_number,license,provisions,about,
         rating,address,location,mobile_number1,mobile_number2,email1,email2,website,whatsapp,facebook,
-        instagram,logo,profile_picture,payment_method})
+        instagram,logo,profile_picture,payment_method, admin_header})
     console.log(user)
     return ("successful")
 })

@@ -26,7 +26,7 @@ export class AdminService {
             })
     }
 
-    login({ email, password }: AdminAddModel) {
+    login({ email, password, role }: AdminAddModel) {
         console.log(email)
         return Admin.findOne({ where: { email } }).then(u => {
             const { id, email } = u!
@@ -40,7 +40,7 @@ export class AdminService {
                     console.log("correct password!")
                 }
             })
-            return { token: jwt.sign({ id, email }, this._jwtSecret) }
+            return { token: jwt.sign({ id, email, role }, this._jwtSecret) }
         })
     }
 
@@ -52,14 +52,15 @@ export class AdminService {
                     return
                 }
 
-                AdminService._admin = Admin.findById(decoded['id'])
-                resolve(true)
+                //AdminService._admin = Admin.findById(decoded['id'])
+                //resolve(true)
                 return
             })
         }) as Promise<boolean>
     }
 
     getAdminById(id: number) {
+        console.log("problem here")
         return Admin.findById(id, {
             attributes: AdminService.adminAttributes
         }) as Bluebird<AdminViewModel>

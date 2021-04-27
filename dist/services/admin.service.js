@@ -31,11 +31,21 @@ class AdminService {
             //=> this.getAdminById(u!.id))
         });
     }
-    login({ email }) {
+    login({ email, password, role }) {
         console.log(email);
         return admins_1.Admin.findOne({ where: { email } }).then(u => {
             const { id, email } = u;
-            return { token: jwt.sign({ id, email }, this._jwtSecret) };
+            console.log("comparing passwords");
+            bcrypt.compare(password, u.password, function (err, res) {
+                if (err) {
+                    console.log("wrong password");
+                    return;
+                }
+                else {
+                    console.log("correct password!");
+                }
+            });
+            return { token: jwt.sign({ id, email, role }, this._jwtSecret) };
         });
     }
     verifyToken(token) {
@@ -45,13 +55,14 @@ class AdminService {
                     resolve(false);
                     return;
                 }
-                AdminService._admin = admins_1.Admin.findById(decoded['id']);
-                resolve(true);
+                //AdminService._admin = Admin.findById(decoded['id'])
+                //resolve(true)
                 return;
             });
         });
     }
     getAdminById(id) {
+        console.log("problem here");
         return admins_1.Admin.findById(id, {
             attributes: AdminService.adminAttributes
         });

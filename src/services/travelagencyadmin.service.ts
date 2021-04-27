@@ -19,8 +19,15 @@ export class TravelAgencyAdminService {
 
     register({ email, password, role, name, travel_agency_name,mobile_number,license,provisions,about,
     rating,address,location,mobile_number1,mobile_number2,email1,email2,website,whatsapp,facebook,
-    instagram,logo,profile_picture,payment_method} : TravelAgencyAdminAddModel) {
+    instagram,logo,profile_picture,payment_method, admin_header} : TravelAgencyAdminAddModel) {
         console.log("got into register AdminService")
+        const verified = jwt.verify(admin_header, this._jwtSecret)
+        if(verified['role'] == "Admin"){
+            console.log("Allow access")
+        }
+        else{
+            console.log("Deny access")
+        }
         bcrypt.hash(password, this._saltRounds)
             .then(hash => {
                 return TravelAgencyAdmin.create({ email, password: hash , role, name, travel_agency_name,mobile_number,license,provisions,about,

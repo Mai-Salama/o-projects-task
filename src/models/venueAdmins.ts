@@ -8,7 +8,8 @@ export interface VenueAdminAddModel{
     name: string,
     mobile_number: string,
     venue_name: string,
-    profile_picture: string
+    profile_picture: string,
+    admin_header: string
 }
 
 export interface VenueAdminModel extends Sequelize.Model<VenueAdminModel,VenueAdminAddModel>{

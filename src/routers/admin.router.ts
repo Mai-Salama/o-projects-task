@@ -29,11 +29,11 @@ userRouter.post('/login', (req, res) => {
         return res.status(422).json(errors.array())
     
     const email = req.body.email
-    const password = ""
-    const role = ""
-    console.log(email)
+    const password = req.body.password
+    const role = "Admin"
     //const payload = matchedData({email}) as AdminAddModel
     const token = userService.login({email, password,role})
-
+    res.header('token', token)
+    console.log("set the header")
     return token.then(t => res.json(t))
 })

@@ -15,9 +15,18 @@ export class VenueAdminService {
         return VenueAdminService._venueadmin
     }
 
-    register({ email, password, role, name, mobile_number, venue_name, profile_picture} : VenueAdminAddModel) {
+    register({ email, password, role, name, mobile_number, venue_name, profile_picture, admin_header} : VenueAdminAddModel) {
         console.log("got into register AdminService")
-        console.log({email, password, role, name, mobile_number, venue_name, profile_picture})
+        // check token
+        const verified = jwt.verify(admin_header, this._jwtSecret)
+        console.log(verified['role'])
+        if(verified['role'] == "Admin"){
+            console.log("Admin access")
+        }
+        else{
+            console.log("Deny access")
+        }
+        //console.log({email, password, role, name, mobile_number, venue_name, profile_picture})
         bcrypt.hash(password, this._saltRounds)
             .then(hash => {
                 return VenueAdmin.create({ email, password: hash , role, name, mobile_number, venue_name, profile_picture})
